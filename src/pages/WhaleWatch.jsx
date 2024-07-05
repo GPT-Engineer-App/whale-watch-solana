@@ -8,11 +8,16 @@ import { useQuery } from "@tanstack/react-query";
 const fetchWhaleData = async ({ queryKey }) => {
   const [_, contractAddress, timePeriod] = queryKey;
   // Replace with actual API call to fetch whale data from Solana blockchain
-  const response = await fetch(`/api/whales?contract=${contractAddress}&timePeriod=${timePeriod}`);
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+  try {
+    const response = await fetch(`/api/whales?contract=${contractAddress}&timePeriod=${timePeriod}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching whale data:", error);
+    throw error;
   }
-  return response.json();
 };
 
 const WhaleWatch = () => {
@@ -26,6 +31,7 @@ const WhaleWatch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form submitted with:", { contractAddress, timePeriod });
     refetch();
   };
 
@@ -36,20 +42,20 @@ const WhaleWatch = () => {
         <div className="mb-4">
           <Label htmlFor="contractAddress">Contract Address</Label>
           <Input
-            id="contractAddress"
-            value={contractAddress}
-            onChange={(e) => setContractAddress(e.target.value)}
-            required
-          />
+    id="contractAddress"
+    value={contractAddress}
+    onChange={(e) => setContractAddress(e.target.value)}
+    required
+  />
         </div>
         <div className="mb-4">
           <Label htmlFor="timePeriod">Time Period</Label>
           <Input
-            id="timePeriod"
-            value={timePeriod}
-            onChange={(e) => setTimePeriod(e.target.value)}
-            required
-          />
+    id="timePeriod"
+    value={timePeriod}
+    onChange={(e) => setTimePeriod(e.target.value)}
+    required
+  />
         </div>
         <Button type="submit">Search</Button>
       </form>
