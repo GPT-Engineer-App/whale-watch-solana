@@ -5,6 +5,7 @@ import { Home, Search } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/sidebar"; // available: default, navbar, sidebar
 import Index from "./pages/Index.jsx";
+import WhaleWatch from "./pages/WhaleWatch.jsx"; // Import WhaleWatch page
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Index />} />
-              {/* Add more routes here as needed */}
+              <Route path="whale-watch" element={<WhaleWatch />} /> {/* Add WhaleWatch route */}
             </Route>
           </Routes>
         </Router>
