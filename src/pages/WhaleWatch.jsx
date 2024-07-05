@@ -18,7 +18,8 @@ const fetchWhaleData = async ({ queryKey }) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.json();
+    const data = await response.json(); // Ensure JSON parsing is done correctly
+    return data;
   } catch (error) {
     console.error("Error fetching whale data:", error);
     throw error;
